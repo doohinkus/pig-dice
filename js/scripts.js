@@ -1,49 +1,41 @@
 function Player (mid){
     this.mid = mid;
     this.score = 0;
+    this.runningTotal = 0;
     this.dice = 0;
-    this.role = "wait";
+    this.turn = 0;
 }
 
-Player.prototype.roll = function (){
+Player.prototype.throw = function (){
   var result = Math.floor((Math.random() * 6) + 1);
-  this.dice = result;
-  if (result != 1 && this.role === "play" && this.score < 100){
-      this.score += result;
-      this.role = "play";
-      return this.score;
-  }else if(this.score < 100){
-    this.role ="wait";
-      return this.score = 0;
+  if (this.turn === 1){
+    this.calculateRunningTotal();
+    return this.dice = result;
   }
 }
+
+Player.prototype.hold = function (){
+  return this.turn = 0;
+}
+
+Player.prototype.calculateRunningTotal = function (){
+  if (this.dice != 1){
+    return this.runningTotal += this.dice;
+  }else {
+    return this.runningTotal = 0;
+  }
+}
+
 
 $(document).ready(function (){
   var player1 = new Player (1);
   var player2 =new Player (2);
-  player1.role = "play";
+  player1.turn = 1;
 
 
   $("#roll").click(function (){
 
-    if (player1.role === "play"){
-      var roll = player1.roll();
-      if (player1.dice === 1){
-        player2.role = "play";
-      }
-      $("#player1score").text(player1.score);
-      $("#dice").text(player1.dice);
-    }
-    if (player2.role === "play"){
-      var roll2 = player2.roll();
-      if (player2.dice === 1){
-        player1.role = "play";
-      }
-      $("#player2score").text(player2.score);
-      $("#dice").text(player2.dice);
-    }
-
-  console.log(player2.role, " ", player1.role);
+    $("#player1score").text(player1.throw() + " " + player1.runningTotal);
 
   });
   //
