@@ -5,15 +5,17 @@ function Player (playerID){
   this.turn = 0;
   this.playerID = playerID;
 }
+
 function Referee (){
   this.players = [];
   this.winner = "";
+  this.gameover = 0;
 }
-//players object?
+
 
 Player.prototype.throw = function (){
   var result = Math.floor((Math.random() * 6) + 1);
-  return  result;
+  return  this.dice = result;
 }
 
 Player.prototype.hold = function (){
@@ -47,19 +49,33 @@ Referee.prototype.switchPlayers = function (playera, playerb){
     playera.turn = 1;
   }
 }
+Referee.prototype.checkThrow = function (player){
+  // console.log("switched players : ", player.dice);
+  if (player.dice === 1){
+    this.switchPlayers(this.players[0], this.players[1]);
+    console.log("switched players");
+  }
+
+}
+
+
 
 
 $(document).ready(function (){
   var player1 = new Player ();
   var player2 = new Player ();
   var jimmyTheReferee = new Referee ();
-
   jimmyTheReferee.players.push(player1, player2);
+  jimmyTheReferee.pickPlayer();
+
+
 
 
 
   $("#roll").click(function (){
-
+    console.log(player1.throw());
+    console.log(jimmyTheReferee.checkThrow(player1));
+    console.log(jimmyTheReferee.calculateRunningTotal(player1));
   });
 
   //
