@@ -1,7 +1,6 @@
 function Player (playerID){
   this.score = 0;
   this.runningTotal = 0;
-  this.dice = 0;
   this.turn = 0;
   this.playerID = playerID;
 }
@@ -10,12 +9,30 @@ function Referee (){
   this.players = [];
   this.winner = "";
   this.gameover = 0;
+  this.dice = 0;
 }
 
 
-Player.prototype.throw = function (){
+Referee.prototype.throw = function (){
   var result = Math.floor((Math.random() * 6) + 1);
-  return  this.dice = result;
+  this.dice = result;
+  if (this.players[0].turn === 1) {
+    if (result !=1){
+      this.players[0].runningTotal += result;
+    }else {
+      this.players[0].runningTotal = 0;
+      this.players[0].turn = 0;
+      this.players[1].turn = 1;
+    }
+  }else if (this.players[1].turn === 1) {
+    if (result !=1){
+      this.players[1].runningTotal += result;
+    }else {
+      this.players[1].runningTotal = 0;
+      this.players[1].turn = 0;
+      this.players[0].turn = 1;
+    }
+  }
 }
 
 Player.prototype.hold = function (){
@@ -28,35 +45,6 @@ Referee.prototype.pickPlayer = function (){
   this.players[0].turn = 1;
 }
 
-Referee.prototype.calculateRunningTotal = function (player){
-  if (player.dice !=1 && player.turn === 1){
-    player.runningTotal += player.dice;
-  }else if (player.dice === 1){
-    player.runningTotal = 0;
-  }
-  if (player.runningTotal >=100){
-    this.winner = player.ID;
-  }
-  return player.runningTotal;
-}
-
-Referee.prototype.switchPlayers = function (playera, playerb){
-  if (playera.turn === 1){
-    playera.turn = 0;
-    playerb.turn = 1;
-  }else{
-    playerb.turn = 0;
-    playera.turn = 1;
-  }
-}
-Referee.prototype.checkThrow = function (player){
-  // console.log("switched players : ", player.dice);
-  if (player.dice === 1){
-    this.switchPlayers(this.players[0], this.players[1]);
-    console.log("switched players");
-  }
-
-}
 
 
 
@@ -73,9 +61,13 @@ $(document).ready(function (){
 
 
   $("#roll").click(function (){
-    console.log(player1.throw());
-    console.log(jimmyTheReferee.checkThrow(player1));
-    console.log(jimmyTheReferee.calculateRunningTotal(player1));
+    jimmyTheReferee.throw();
+
+    $("#dice").text(jimmyTheReferee.dice);
+    console.log("player 2: ", player2.turn, "player 1: ", player1.turn);
+    $("#player1RunningTotal").text(player1.runningTotal);
+    $("#player2RunningTotal").text(player2.runningTotal);
+
   });
 
   //
