@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Limelight');
+body{
+  background-image: url("../img/dice-background.jpg");
+  background-size: cover;
+  color: #D80003;
+  color: #f0ad4e;
+  color:#fff;
+  font-size: 14pt;
+  font-family: 'Limelight', cursive;
+}
+.center {
+  text-align: center;
+}
+.header{
+  text-align: center;
+  font-size: 28pt;
+
+  text-shadow: 2px 2px 0px #000;
+  letter-spacing: 10px;
+}
+.bgColor {
+
+
+}
+.spacer {
+    margin-top: 10px; /* define margin as you see fit */
+}
+.wrapper{
+  margin: 10px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+#preheader {
+  background-color: #449d44;
+}
+button{
+  margin-left: 30px;
+}
+.highlight{
+    background-color: rgba(255, 255, 255, 0.2);
+}

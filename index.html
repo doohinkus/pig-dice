@@ -9,40 +9,53 @@
     <title></title>
   </head>
   <body>
+    <div id="preheader">
+      <p class="header">Pig Dice</p>
+    </div>
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
-          <h2>Dice:</h2>
-          <div id="dice">
-            0
-          </div>
-          <div id="winner">
+        <div class="col-md-12 spacer">
+          <div class="wrapper center">
+              <h2>Dice:</h2>
+              <div id="dice">
+                0
+              </div>
+              <div id="winner">
+              </div>
           </div>
 
         </div>
-        <div class="col-md-6">
-          <h2> Player 1 running total</h2>
-          <div id="player1RunningTotal">
-            0
-          </div>
-          <div id="player1Total">
-            0
+        <div class="col-md-6 spacer bgColor">
+          <div class="wrapper player1">
+            <h2> Player 1 running total</h2>
+            <div id="player1RunningTotal">
+              0
+            </div>
+            <div id="player1Total">
+              0
+            </div>
           </div>
         </div>
-        <div class="col-md-6">
-          <h2> Player 2 running total</h2>
-          <div id="player2RunningTotal">
-            0
+        <div class="col-md-6 spacer bgColor">
+          <div class="wrapper player2">
+              <h2> Player 2 running total</h2>
+              <div id="player2RunningTotal">
+                0
+              </div>
+              <div id="player2Total">
+                0
+              </div>
+
           </div>
-          <div id="player2Total">
-            0
-          </div>
+
         </div>
       </div>
 
+      <div class="center">
+        <button type="button" id="roll" class = "btn btn-success btn-lg" name="button">Roll</button>
+        <button type="button" id="hold" class = "btn btn-warning btn-lg" name="button">Hold</button>
+      </div>
 
-      <button type="button" id="roll" name="button">Roll</button>
-      <button type="button" id="hold" name="button">Hold</button>
 
     </div>
 
