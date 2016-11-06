@@ -15,7 +15,12 @@ function Referee (){
 
 Referee.prototype.throw = function (){
   var result = Math.floor((Math.random() * 6) + 1);
-  this.dice = result;
+  if(this.gameover === 0){
+    this.dice = result;
+  }
+
+
+
   if (this.players[0].turn === 1) {
     if (result !=1){
       this.players[0].runningTotal += result;
@@ -38,17 +43,34 @@ Referee.prototype.throw = function (){
 Referee.prototype.hold = function (){
   if (this.players[0].turn === 1){
     this.players[0].turn = 0;
-    this.players[0].total += this.players[0].runningTotal;
+    this.players[0].score += this.players[0].runningTotal;
+    this.players[0].runningTotal = 0;
     this.players[1].turn = 1;
   } else if (this.players[1].turn === 1){
     this.players[1].turn = 0;
-    this.players[1].total += this.players[1].runningTotal;
+    this.players[1].score += this.players[1].runningTotal;
+    this.players[1].runningTotal = 0;
     this.players[0].turn = 1;
   }
 }
 
 Referee.prototype.pickPlayer = function (){
   this.players[0].turn = 1;
+}
+Referee.prototype.checkGame = function (){
+
+  if (this.players[0].score >= 100){
+    this.players[1].turn = 0;
+    this.players[0].turn = 0;
+    this.winner = this.players[0];
+    this.gameover = 1;
+  }else if (this.players[1].score >= 100){
+    this.players[1].turn = 0;
+    this.players[0].turn = 0;
+    this.winner = this.players[1];
+    this.gameover = 1;
+  }
+
 }
 
 
@@ -68,11 +90,17 @@ $(document).ready(function (){
 
   $("#roll").click(function (){
     jimmyTheReferee.throw();
+    jimmyTheReferee.checkGame();
+
 
     $("#dice").text(jimmyTheReferee.dice);
-    console.log("player 2: ", player2.turn, "player 1: ", player1.turn);
+
     $("#player1RunningTotal").text(player1.runningTotal);
     $("#player2RunningTotal").text(player2.runningTotal);
+
+    $("#player1Total").text(player1.score);
+    $("#player2Total").text(player2.score);
+    // $("#winner").text("Player " + jimmyTheReferee.winner.playerID + "wins!!!");
 
   });
 
