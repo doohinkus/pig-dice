@@ -35,10 +35,16 @@ Referee.prototype.throw = function (){
   }
 }
 
-Player.prototype.hold = function (){
-  this.turn = 0;
-  this.total += this.runningTotal;
-  return this.total;
+Referee.prototype.hold = function (){
+  if (this.players[0].turn === 1){
+    this.players[0].turn = 0;
+    this.players[0].total += this.players[0].runningTotal;
+    this.players[1].turn = 1;
+  } else if (this.players[1].turn === 1){
+    this.players[1].turn = 0;
+    this.players[1].total += this.players[1].runningTotal;
+    this.players[0].turn = 1;
+  }
 }
 
 Referee.prototype.pickPlayer = function (){
@@ -72,6 +78,6 @@ $(document).ready(function (){
 
   //
   $("#hold").click(function (){
-
+    jimmyTheReferee.hold();
   });
 });
