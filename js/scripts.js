@@ -68,6 +68,7 @@ Referee.prototype.checkGame = function (){
   }
 }
 
+//interface functions
 function switchClass(player1, player2){
   if (player1.turn === 1){
     $("div.player1").addClass("highlight");
@@ -76,6 +77,18 @@ function switchClass(player1, player2){
     $("div.player1").removeClass("highlight");
     $("div.player2").addClass("highlight");
   }
+}
+
+function showScore(player1, player2){
+  $("#player1RunningTotal").text("Running Total: " + player1.runningTotal);
+  $("#player2RunningTotal").text("Running Total: " + player2.runningTotal);
+
+  $("#player1Total").text("Total: " + player1.score);
+  $("#player2Total").text("Total: " + player2.score);
+}
+
+function showDice (dice){
+  $("img").attr("src","img/" + dice + ".png").hide().slideDown();
 }
 
 
@@ -92,14 +105,8 @@ $(document).ready(function (){
     jimmyTheReferee.throw();
     jimmyTheReferee.checkGame();
 
-
-    $("#dice").text(jimmyTheReferee.dice);
-
-    $("#player1RunningTotal").text(player1.runningTotal);
-    $("#player2RunningTotal").text(player2.runningTotal);
-
-    $("#player1Total").text(player1.score);
-    $("#player2Total").text(player2.score);
+    showDice(jimmyTheReferee.dice);
+    showScore(player1, player2);
     switchClass(player1, player2);
 
     if (jimmyTheReferee.gameover === 1){
@@ -110,7 +117,9 @@ $(document).ready(function (){
   });
 
   $("#hold").click(function (){
+    jimmyTheReferee.checkGame();
     jimmyTheReferee.hold();
     switchClass(player1, player2);
+    showScore(player1, player2);
   });
 });

@@ -14,13 +14,17 @@ body{
 .header{
   text-align: center;
   font-size: 28pt;
+  color: yellow;
 
   text-shadow: 2px 2px 0px #000;
   letter-spacing: 10px;
 }
-.bgColor {
-
-
+#winner {
+font-size: 28pt;
+color:yellow;
+}
+img {
+  height: 100px;
 }
 .spacer {
     margin-top: 10px; /* define margin as you see fit */
