@@ -102,11 +102,18 @@ function showDice (dice){
 
 function ai (ref){
   console.log(ref.players[1].playerID);
-    if (ref.players[1].playerID === "ai"){
+    if (ref.players[1].playerID === "ai" && ref.players[0].turn === 0){
     ref.checkGame();
-    ref.throw();
+    if (ref.players[1].runningTotal <= 5){
+      ref.throw();
+      switchClass(ref.players[0], ref.players[1]);
+    }else {
+      ref.hold();
+      switchClass(ref.players[0], ref.players[1]);
+    }
+    showDice(ref.dice);
     // showDice(ref.dice);
-    showScore(ref.players[0], ref.players[1]);
+    // showScore(ref.players[0], ref.players[1]);
     // console.log(ref)
 
     }
@@ -122,7 +129,7 @@ $(document).ready(function (){
   var jimmyTheReferee = new Referee ();
   jimmyTheReferee.players.push(player1, player2);
   jimmyTheReferee.pickPlayer();
-  setInterval(ai, 500, jimmyTheReferee);
+  setInterval(ai, 1000, jimmyTheReferee);
 
 
   $("#roll").click(function (){
@@ -145,6 +152,6 @@ $(document).ready(function (){
     jimmyTheReferee.checkGame();
     jimmyTheReferee.hold();
     switchClass(player1, player2);
-    showScore(player1, player2);
+    showDice(player1, player2);
   });
 });
