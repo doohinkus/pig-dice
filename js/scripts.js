@@ -102,8 +102,9 @@ $(document).ready(function (){
 
 
   $("#roll").click(function (){
-    jimmyTheReferee.throw();
     jimmyTheReferee.checkGame();
+    jimmyTheReferee.throw();
+
 
     showDice(jimmyTheReferee.dice);
     showScore(player1, player2);
