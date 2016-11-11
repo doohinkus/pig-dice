@@ -112,9 +112,7 @@ function ai (ref){
       switchClass(ref.players[0], ref.players[1]);
     }
     showDice(ref.dice);
-    // showDice(ref.dice);
-    // showScore(ref.players[0], ref.players[1]);
-    // console.log(ref)
+  
 
     }
 
