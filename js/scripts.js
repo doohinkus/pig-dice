@@ -12,6 +12,17 @@ function Referee (){
   this.dice = 0;
 }
 
+Referee.prototype.switchPlayer =  function (){
+  if (this.players[0].turn === 1){
+    this.players[0].turn = 0;
+    this.players[1].turn = 1;
+  }else if (this.players[1].turn === 1){
+    this.players[0].turn = 1;
+    this.players[1].turn = 0;
+  }
+
+}
+
 
 Referee.prototype.throw = function (){
   var result = Math.floor((Math.random() * 6) + 1);
@@ -23,31 +34,29 @@ Referee.prototype.throw = function (){
       this.players[0].runningTotal += result;
     }else {
       this.players[0].runningTotal = 0;
-      this.players[0].turn = 0;
-      this.players[1].turn = 1;
+      this.switchPlayer();
     }
   }else if (this.players[1].turn === 1) {
     if (result !=1){
       this.players[1].runningTotal += result;
     }else {
       this.players[1].runningTotal = 0;
-      this.players[1].turn = 0;
-      this.players[0].turn = 1;
+      this.switchPlayer();
     }
   }
 }
 
 Referee.prototype.hold = function (){
   if (this.players[0].turn === 1){
-    this.players[0].turn = 0;
+
     this.players[0].score += this.players[0].runningTotal;
     this.players[0].runningTotal = 0;
-    this.players[1].turn = 1;
+    this.switchPlayer();
   } else if (this.players[1].turn === 1){
-    this.players[1].turn = 0;
+
     this.players[1].score += this.players[1].runningTotal;
     this.players[1].runningTotal = 0;
-    this.players[0].turn = 1;
+    this.switchPlayer();
   }
 }
 
@@ -91,14 +100,29 @@ function showDice (dice){
   $("img").attr("src","img/" + dice + ".png").hide().slideDown();
 }
 
+function ai (ref){
+  console.log(ref.players[1].playerID);
+    if (ref.players[1].playerID === "ai"){
+    ref.checkGame();
+    ref.throw();
+    // showDice(ref.dice);
+    showScore(ref.players[0], ref.players[1]);
+    // console.log(ref)
+
+    }
+
+}
+
+
 
 
 $(document).ready(function (){
-  var player1 = new Player ();
-  var player2 = new Player ();
+  var player1 = new Player (1);
+  var player2 = new Player ("ai");
   var jimmyTheReferee = new Referee ();
   jimmyTheReferee.players.push(player1, player2);
   jimmyTheReferee.pickPlayer();
+  setInterval(ai, 500, jimmyTheReferee);
 
 
   $("#roll").click(function (){
