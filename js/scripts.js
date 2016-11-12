@@ -16,6 +16,7 @@ Referee.prototype.switchPlayer =  function (){
   if (this.players[0].turn === 1){
     this.players[0].turn = 0;
     this.players[1].turn = 1;
+
   }else if (this.players[1].turn === 1){
     this.players[0].turn = 1;
     this.players[1].turn = 0;
@@ -52,11 +53,13 @@ Referee.prototype.hold = function (){
     this.players[0].score += this.players[0].runningTotal;
     this.players[0].runningTotal = 0;
     this.switchPlayer();
+
   } else if (this.players[1].turn === 1){
 
     this.players[1].score += this.players[1].runningTotal;
     this.players[1].runningTotal = 0;
     this.switchPlayer();
+
   }
 }
 
@@ -77,6 +80,16 @@ Referee.prototype.checkGame = function (){
   }
 }
 
+// Referee.prototype.checkAiTurn = function (){
+//   // console.log(this.players[1].playerID === "ai")
+//   if (this.players[1].playerID === "ai" && this.players[1].turn ===1){
+//     //throw dice once a second
+//     setInterval(this.throw, 1000);
+//     //if after 4 tosses hold
+//
+//   }
+// }
+
 //interface functions
 function switchClass(player1, player2){
   if (player1.turn === 1){
@@ -85,6 +98,7 @@ function switchClass(player1, player2){
   }else if (player2.turn === 1){
     $("div.player1").removeClass("highlight");
     $("div.player2").addClass("highlight");
+
   }
 }
 
@@ -97,38 +111,70 @@ function showScore(player1, player2){
 }
 
 function showDice (dice){
-  $("img").attr("src","img/" + dice + ".png").hide().slideDown();
-}
-
-function ai (ref){
-  console.log(ref.players[1].playerID);
-    if (ref.players[1].playerID === "ai" && ref.players[0].turn === 0){
-    ref.checkGame();
-    if (ref.players[1].runningTotal <= 5){
-      ref.throw();
-      switchClass(ref.players[0], ref.players[1]);
-    }else {
-      ref.hold();
-      switchClass(ref.players[0], ref.players[1]);
-    }
-    showDice(ref.dice);
-  
-
-    }
+  if (dice >= 1){
+    $("img").attr("src","img/" + dice + ".png").hide().fadeIn();
+  }
 
 }
+
+
+
 
 
 
 
 $(document).ready(function (){
-  var player1 = new Player (1);
-  var player2 = new Player ("ai");
+  var gameChoice = $('input:radio[name=gameChoice]:checked').val();
+  var player1 = new Player ("mister");
+  var player2 = new Player (gameChoice);
   var jimmyTheReferee = new Referee ();
+
+
   jimmyTheReferee.players.push(player1, player2);
   jimmyTheReferee.pickPlayer();
-  setInterval(ai, 1000, jimmyTheReferee);
 
+
+
+  $("#gameChoice").click(function (){
+    gameChoice = $('input:radio[name=gameChoice]:checked').val();
+    if (gameChoice === "ai"){
+      // console.log("ai");
+      jimmyTheReferee.players[1].playerID = "ai";
+
+      //
+
+    }
+    $(this).parent().parent().fadeOut(700, function (){
+      $("#twoPlayer").fadeIn();
+    });
+  });
+
+  setInterval(function (){
+    if (player2.playerID === "ai" && player2.turn ===1 ){
+      if (player2.runningTotal <= 15){
+          jimmyTheReferee.throw();
+          $("#hold").hide();
+          $("#roll").hide();
+      }else {
+        jimmyTheReferee.hold();
+        $("#hold").fadeIn();
+        $("#roll").fadeIn();
+      }
+      if(player2.turn ===0){
+        $("#hold").fadeIn();
+        $("#roll").fadeIn();
+      }
+
+
+
+      jimmyTheReferee.checkGame();
+      showDice(jimmyTheReferee.dice);
+      showScore(player1, player2);
+      switchClass(player1, player2);
+    }
+
+  }, 1000);
+// setInterval(jimmyTheReferee.checkAiTurn, 1000);
 
   $("#roll").click(function (){
     jimmyTheReferee.checkGame();
@@ -147,8 +193,11 @@ $(document).ready(function (){
   });
 
   $("#hold").click(function (){
-    jimmyTheReferee.checkGame();
+
     jimmyTheReferee.hold();
+    showScore(player1, player2);
+    jimmyTheReferee.checkGame();
+
     switchClass(player1, player2);
     showDice(player1, player2);
   });
