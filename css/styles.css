@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Limelight');
+@import url('https://fonts.googleapis.com/css?family=Monoton');
 body{
   background-image: url("../img/dice-background.jpg");
   background-size: cover;
@@ -16,15 +17,17 @@ body{
 }
 .header{
   text-align: center;
-  font-size: 28pt;
-  color: yellow;
+  font-size: 38pt;
+  color: red;
+  font-family: 'Monoton', cursive;
 
-  text-shadow: 2px 2px 0px #000;
+  /*-webkit-text-stroke: 1px #000;*/
+text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff, 0 0 35px #fff, 0 0 40px #fff, 0 0 50px #fff, 0 0 75px #fff;
   letter-spacing: 10px;
 }
 #winner {
 font-size: 28pt;
-color:yellow;
+color: red;
 }
 img {
   height: 100px;
