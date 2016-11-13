@@ -168,9 +168,13 @@ $(document).ready(function (){
 
 
       jimmyTheReferee.checkGame();
+      if (jimmyTheReferee.gameover === 1){
+        $("#winner").show().text(jimmyTheReferee.winner + "wins!!!");
+      }
       showDice(jimmyTheReferee.dice);
       showScore(player1, player2);
       switchClass(player1, player2);
+
     }
 
   }, 1000);
@@ -200,5 +204,9 @@ $(document).ready(function (){
 
     switchClass(player1, player2);
     showDice(player1, player2);
+
+    if (jimmyTheReferee.gameover === 1){
+      $("#winner").show().text(jimmyTheReferee.winner + "wins!!!");
+    }
   });
 });
