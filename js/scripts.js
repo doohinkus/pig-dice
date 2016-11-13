@@ -24,6 +24,10 @@ Referee.prototype.switchPlayer =  function (){
 
 }
 
+Referee.prototype.runningTotal = function (player) {
+  player.score += player.runningTotal;
+  player.runningTotal = 0;
+}
 
 Referee.prototype.throw = function (){
   var result = Math.floor((Math.random() * 6) + 1);
@@ -49,15 +53,11 @@ Referee.prototype.throw = function (){
 
 Referee.prototype.hold = function (){
   if (this.players[0].turn === 1){
-
-    this.players[0].score += this.players[0].runningTotal;
-    this.players[0].runningTotal = 0;
+    this.runningTotal(this.players[0]);
     this.switchPlayer();
 
   } else if (this.players[1].turn === 1){
-
-    this.players[1].score += this.players[1].runningTotal;
-    this.players[1].runningTotal = 0;
+    this.runningTotal(this.players[1]);
     this.switchPlayer();
 
   }
